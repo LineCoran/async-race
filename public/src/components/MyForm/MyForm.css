@@ -1,0 +1,22 @@
+.form {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.form-setting {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+} 
+
+.form .react-colorful {
+    width: 150px;
+    height: 150px;
+}
+
+.form .react-colorful__pointer {
+    width: 14px;
+    height: 14px;
+}
