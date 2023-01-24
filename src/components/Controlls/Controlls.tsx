@@ -4,23 +4,23 @@ import { carModels, carNames } from "../../data/cars";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { carPromiseResult } from "../../interfaces/interfaces";
 import { changeRaceStatus } from "../../store/carsSlice";
-import { calcTime, generateRandomColor, generateRandomNumber, getWinnerById, showWinnerCar, startAnimation, stopAnimation } from "../../utils/helpers";
+import { calcTime, generateRandomColor, generateRandomNumber, getWinnerById, showWinnerCar, startAnimation, stopAnimation } from "../../helpers/helpers";
 import './Controlls.css'
 
 function Controls() {
-    const GENERATE_CARS_LENGTH = 100; 
-    const raceStatus = useAppSelector((state) => state.carsReducer.raceStatus);
-    const params = useAppSelector((state) => state.carsReducer.carListParams);
-    const { data } = useGetCarsQuery(params);
-    const cars = useGetAllCarsQuery('');
-    const dispatch = useAppDispatch();
-    const [addCar] = useAddCarMutation();
-    const [startCar] = useStartCarMutation();
-    const [checkEngine] = useCheckEngineMutation();
-    const [addWinner] = useAddWinnerMutation();
-    const [updateWinner] = useUpdateWinnerMutation();
+  const GENERATE_CARS_LENGTH = 100; 
+  const raceStatus = useAppSelector((state) => state.carsReducer.raceStatus);
+  const params = useAppSelector((state) => state.carsReducer.carListParams);
+  const { data } = useGetCarsQuery(params);
+  const cars = useGetAllCarsQuery('');
+  const dispatch = useAppDispatch();
+  const [addCar] = useAddCarMutation();
+  const [startCar] = useStartCarMutation();
+  const [checkEngine] = useCheckEngineMutation();
+  const [addWinner] = useAddWinnerMutation();
+  const [updateWinner] = useUpdateWinnerMutation();
     
-    async function startRace(status: string) {
+  async function startRace(status: string) {
         if (status === 'started') {
           dispatch(changeRaceStatus(true))
         } else {
@@ -43,7 +43,7 @@ function Controls() {
       });
     }
   }
-    async function handleMoveCar(id: number, status: string) {
+  async function handleMoveCar(id: number, status: string) {
       const {distance, velocity} = await startCar({id, status}).unwrap();
       const winnerCar = await getWinnerById(id);
       const time = calcTime(distance, velocity);
@@ -65,7 +65,7 @@ function Controls() {
           }
   }
 }
-    const handleGenerateCar = async () => {
+  const handleGenerateCar = async () => {
         let countOfCars = GENERATE_CARS_LENGTH;
         while(countOfCars > 0) {
           const carName = carNames[generateRandomNumber(carNames.length)];
@@ -75,19 +75,18 @@ function Controls() {
           addCar({color, name}).unwrap();
           countOfCars--;
         }
-    }
+  }
 
-    return (
-      <section className='controlls'>
-        <h2 className='car-list-title'>GARAGE ({cars.data ? cars.data.length : '0'})</h2>
-        <ButtonGroup variant="outlined" aria-label="outlined button group">
-          <Button onClick={handleGenerateCar}>Generate</Button>
-          <Button disabled={raceStatus} onClick={() => startRace('started')}>Race</Button>
-          <Button disabled={!raceStatus} onClick={() => startRace('stopped')}>Stop</Button>
-        </ButtonGroup>
-      </section>
-    )
+  return (
+    <section className='controlls'>
+      <h2 className='car-list-title'>GARAGE ({cars.data ? cars.data.length : '0'})</h2>
+      <ButtonGroup variant="outlined" aria-label="outlined button group">
+        <Button onClick={handleGenerateCar}>Generate</Button>
+        <Button disabled={raceStatus} onClick={() => startRace('started')}>Race</Button>
+        <Button disabled={!raceStatus} onClick={() => startRace('stopped')}>Stop</Button>
+      </ButtonGroup>
+    </section>
+  )
 }
 
 export default Controls;
-

@@ -5,9 +5,7 @@ function Garage() {
   return (
     <main className='garage'>
       <MyForm />  
-        <section>
-            <CarList />
-        </section>
+      <CarList />
     </main>
   );
 }

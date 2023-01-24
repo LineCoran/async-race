@@ -2,7 +2,7 @@ import { Button } from "@mui/material"
 import { useCheckEngineMutation, useDeleteCarMutation, useDeleteWinnerMutation, useStartCarMutation, useAddWinnerMutation, useUpdateWinnerMutation, useGetWinnerQuery } from '../../api/apiSlice';
 import CarIcon from '../CarIcon/CarIcon';
 import { useState } from 'react';
-import { startAnimation, stopAnimation, calcTime, addStyleSelectedCar } from "../../utils/helpers";
+import { startAnimation, stopAnimation, calcTime, addStyleSelectedCar } from "../../helpers/helpers";
 import { ICarProps } from "../../interfaces/interfaces";
 import { useAppSelector } from "../../hooks";
 import { useAppDispatch } from "../../hooks";

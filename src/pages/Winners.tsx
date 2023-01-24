@@ -9,7 +9,7 @@ import { useGetAllWinnersQuery, useGetWinnersQuery } from '../api/apiSlice';
 import { changeWinnerPage, changeWinnerSort } from '../store/carsSlice';
 import { Button, ButtonGroup } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '../hooks';
-import { generateRandomNumber } from '../utils/helpers';
+import { generateRandomNumber } from '../helpers/helpers';
 import { carModels, carNames } from '../data/cars';
 
 type data = {
