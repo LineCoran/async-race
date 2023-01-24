@@ -9,9 +9,12 @@ import { useGetAllWinnersQuery, useGetWinnersQuery } from '../api/apiSlice';
 import { changeWinnerPage, changeWinnerSort } from '../store/carsSlice';
 import { Button, ButtonGroup } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '../hooks';
+import { generateRandomNumber } from '../utils/helpers';
+import { carModels, carNames } from '../data/cars';
 
 type data = {
-  id: number
+  id: number;
+  name: string;
   time: number;
   wins: number;
 }
@@ -21,7 +24,10 @@ function createData(
   time: number,
   wins: number,
 ) {
-  return { id, wins, time };
+  const carName = carNames[generateRandomNumber(carNames.length)];
+  const carModel = carModels[generateRandomNumber(carModels.length)];
+  const name = `${carName} ${carModel}`;
+  return { id, name, wins, time };
 }
 
 export default function Winners() {
@@ -34,7 +40,11 @@ export default function Winners() {
   const rows: data[]  = [];
 
   if (data !== undefined && data.length > 0) {
-    data.map((winner) => rows.push(createData(winner.id, winner.time, winner.wins)))
+    data.map((winner) => rows.push(createData(
+      winner.id,
+      winner.time,
+      winner.wins
+      )))
   }
 
   let maxPages = (allWinnerList.data) ? Math.ceil(allWinnerList.data.length/params._limit) : MIN_PAGE;
@@ -53,6 +63,7 @@ export default function Winners() {
         <TableHead>
           <TableRow>
             <TableCell sx={{cursor: 'pointer'}} onClick={() => handleChangeSort('id')}> CAR ID</TableCell>
+            <TableCell align="right">Name</TableCell>
             <TableCell sx={{cursor: 'pointer'}} onClick={() => handleChangeSort('time')} align="right">Time&nbsp;(s)</TableCell>
             <TableCell sx={{cursor: 'pointer'}} onClick={() => handleChangeSort('wins')} align="right">Wins</TableCell>
           </TableRow>
@@ -66,6 +77,7 @@ export default function Winners() {
               <TableCell component="th" scope="row">
                 {row.id}
               </TableCell>
+              <TableCell align="right">{row.name}</TableCell>
               <TableCell align="right">{row.time}</TableCell>
               <TableCell align="right">{row.wins}</TableCell>
             </TableRow>

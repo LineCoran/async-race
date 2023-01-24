@@ -55,6 +55,7 @@ function Car({ car, listId } : ICarProps) {
                 <div className='car-icon' id={'car'+String(car.id)}>
                     <CarIcon color={car.color}/>
                 </div>
+                <div className="finish"></div>
             </div>
 
         <ButtonGroup sx={{marginBottom: '0.5rem'}} size="small" aria-label="small button group">

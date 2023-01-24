@@ -34,7 +34,7 @@ const initialState: CarsState = {
         _page: 1,
     },
     winnerListParams: {
-        _limit: 7,
+        _limit: 10,
         _page: 1,
         _sort: 'id',
         _order: 'ASC',

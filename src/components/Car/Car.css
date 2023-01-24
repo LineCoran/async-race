@@ -10,6 +10,20 @@ button {
     width: max-content;
 }
 
+.track {
+    position: relative;
+}
+
+.track::after {
+    content: '';
+    position: absolute;
+    right: 20%;
+    top: 0;
+    width: 2px;
+    height: 100%;
+    background-color: green;
+}
+
 @keyframes race {
     0%{transform: translateX(0);}
     100%{transform: translateX(80%);}
