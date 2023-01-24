@@ -1,7 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 type Car = {
-    id: number;
     name: string;
     color: string;
 }
@@ -48,7 +47,6 @@ const carsSLice = createSlice({
     reducers: {
         addCar(state, action: PayloadAction<Car>) {
             state.cars.push({
-                id: 33,
                 name: action.payload.name,
                 color: action.payload.color,
             })

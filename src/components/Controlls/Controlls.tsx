@@ -2,10 +2,12 @@ import { Button, ButtonGroup } from "@mui/material";
 import { useAddCarMutation, useAddWinnerMutation, useCheckEngineMutation, useGetAllCarsQuery, useGetCarsQuery, useStartCarMutation, useUpdateWinnerMutation } from "../../api/apiSlice";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { changeRaceStatus } from "../../store/carsSlice";
-import { calcTime, getWinnerById, startAnimation, stopAnimation } from "../../utils/helpers";
-import './Controlls.css'
+import { calcTime, generateRandomColor, generateRandomNumber, getWinnerById, startAnimation, stopAnimation } from "../../utils/helpers";
+import './Controlls.css';
+import { carModels, carNames } from "../../data/cars";
 
 function Controls() {
+    const COUNT_GENERATE_CARS = 100;
     const raceStatus = useAppSelector((state) => state.carsReducer.raceStatus);
     const params = useAppSelector((state) => state.carsReducer.carListParams);
     const { data } = useGetCarsQuery(params);
@@ -49,13 +51,18 @@ function Controls() {
           }
   }
 }
-    const handleGenerateCar = async () => {
-        let countOfCarsGenerate = 100;
-        while(countOfCarsGenerate > 0) {
-          addCar({color: 'black', name: 'Tesla'}).unwrap();
-          countOfCarsGenerate--;
-        }
-    }
+  const handleGenerateCar = async () => {
+    let countCars = COUNT_GENERATE_CARS;
+      while(countCars > 0) {
+        const carName = carNames[generateRandomNumber(carNames.length)];
+        const carModel = carModels[generateRandomNumber(carModels.length)];
+        debugger
+        addCar({color: generateRandomColor(), name: `${carName} - ${carModel}`}).unwrap();
+        countCars--;
+      }
+  }
+
+
     return (
       <section className='controlls'>
         <h2 className='car-list-title'>GARAGE ({cars.data ? cars.data.length : '0'})</h2>

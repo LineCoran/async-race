@@ -49,3 +49,11 @@ export function addStyleSelectedCar(listId: number) {
     })
     allCars[listId].classList.toggle('car-wrapper-active');
 }
+
+export function generateRandomNumber(maxNumber: number) {
+    return Math.floor(Math.random() * maxNumber);
+  }
+
+export function generateRandomColor(): string {
+    return '#' + (Math.random().toString(16) + '000000').substring(2,8).toUpperCase()
+  }
