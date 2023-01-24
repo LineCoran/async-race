@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/async-race/static/css/main.834afaf0.css",
+    "main.js": "/async-race/static/js/main.7dbdb406.js",
+    "index.html": "/async-race/index.html",
+    "main.834afaf0.css.map": "/async-race/static/css/main.834afaf0.css.map",
+    "main.7dbdb406.js.map": "/async-race/static/js/main.7dbdb406.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.834afaf0.css",
+    "static/js/main.7dbdb406.js"
+  ]
+}

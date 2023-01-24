@@ -6,7 +6,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { useGetAllWinnersQuery, useGetWinnersQuery } from '../api/apiSlice';
-import { changeWinnerPage, changeWinnerSort } from '../store/carsSlice';
+import { changeWinnerPage } from '../store/carsSlice';
 import { Button, ButtonGroup } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '../hooks';
 
@@ -43,18 +43,14 @@ export default function Winners() {
     dispatch(changeWinnerPage(value));
   }
 
-  function handleChangeSort(value: string) {
-    dispatch(changeWinnerSort(value));
-  }
-
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell sx={{cursor: 'pointer'}} onClick={() => handleChangeSort('id')}> CAR ID</TableCell>
-            <TableCell sx={{cursor: 'pointer'}} onClick={() => handleChangeSort('time')} align="right">Time&nbsp;(s)</TableCell>
-            <TableCell sx={{cursor: 'pointer'}} onClick={() => handleChangeSort('wins')} align="right">Wins</TableCell>
+            <TableCell> CAR ID</TableCell>
+            <TableCell align="right">Time&nbsp;(s)</TableCell>
+            <TableCell align="right">Wins</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>

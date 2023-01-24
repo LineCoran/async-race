@@ -73,18 +73,6 @@ const carsSLice = createSlice({
                 state.winnerListParams._page--;
             }
         },
-        changeWinnerSort(state, action: PayloadAction<string>) {
-            if (state.winnerListParams._sort === action.payload ) {
-                if (state.winnerListParams._order === 'DESC') {
-                    state.winnerListParams._order = 'ASC';
-                } else {
-                    state.winnerListParams._order = 'DESC';
-                }
-            } else {
-                state.winnerListParams._sort = action.payload;
-                state.winnerListParams._order = 'ASC';
-            }
-        },
     }
 })
 
@@ -94,6 +82,5 @@ export const {
     addIdUpdatedCarSlice,
     changeGaragePage,
     changeWinnerPage,
-    changeWinnerSort
 } = carsSLice.actions;
 export default carsSLice.reducer;
