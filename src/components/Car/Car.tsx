@@ -1,5 +1,5 @@
 import { Button } from "@mui/material"
-import { useCheckEngineMutation, useDeleteCarMutation, useStartCarMutation, useAddWinnerMutation, useUpdateWinnerMutation, useGetWinnerQuery } from '../../api/apiSlice';
+import { useCheckEngineMutation, useDeleteCarMutation, useDeleteWinnerMutation, useStartCarMutation, useAddWinnerMutation, useUpdateWinnerMutation, useGetWinnerQuery } from '../../api/apiSlice';
 import CarIcon from '../CarIcon/CarIcon';
 import { useState } from 'react';
 import { startAnimation, stopAnimation, calcTime, addStyleSelectedCar } from "../../utils/helpers";
@@ -13,6 +13,7 @@ import './Car.css';
 function Car({ car, listId } : ICarProps) {
     const [startButtonStatus, setStartButtonStatus] = useState(false);
     const [deleteCar] = useDeleteCarMutation();
+    const [deleteWinner] = useDeleteWinnerMutation();
     const [startCar] = useStartCarMutation();
     const [checkEngine] = useCheckEngineMutation();
     const [addWinner] = useAddWinnerMutation();
@@ -48,6 +49,11 @@ function Car({ car, listId } : ICarProps) {
         dispatch(addIdUpdatedCarSlice(carId));
         addStyleSelectedCar(listId);
     }
+
+    function handleDeleteCar(id: number) {
+        deleteCar(id);
+        deleteWinner(id)
+    }
     return(
         <div className="car-wrapper" id={`${car.id}`}>
             <h3>{car.id}. {car.name}</h3>
@@ -75,7 +81,7 @@ function Car({ car, listId } : ICarProps) {
             <Button
               color="error"
               sx={{minWidth: 'max-content', margin: '0'}}
-              onClick={() => deleteCar(car.id)}>Delete
+              onClick={() => handleDeleteCar(car.id)}>Delete
             </Button>
 
             <Button

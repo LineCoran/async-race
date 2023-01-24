@@ -8,8 +8,8 @@ import { addIdUpdatedCarSlice } from "../../store/carsSlice";
 function UpdateCar() {
   const idUpdateCar = useAppSelector((store) => store.carsReducer.updateCarId);
   const dispatch = useAppDispatch();
-  const [color, setColor] = useState('#000000');
-  const [name, setName] = useState('car');
+  const [color, setColor] = useState('#123456');
+  const [name, setName] = useState('');
   const [updateCar] = useUpdateCarMutation();
 
   async function handleUpdateCar() {

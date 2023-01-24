@@ -103,6 +103,13 @@ export const garageApi = createApi({
             }),
             invalidatesTags: [{type: 'Cars', id: 'LIST'}],
         }),
+        deleteWinner: builder.mutation({
+            query: (id: number) => ({
+                url: `/winners/${id}`,
+                method: 'DELETE',
+            }),
+            invalidatesTags: [{type: 'Cars', id: 'LIST'}],
+        }),
         updateCar: builder.mutation<carAPI, UpdateCar>({
             query: ({data, id}) => ({
                 url: `/garage/${id}`,
@@ -190,6 +197,7 @@ export const {
   useGetCarsQuery,
   useAddCarMutation,
   useDeleteCarMutation,
+  useDeleteWinnerMutation,
   useStartCarMutation,
   useCheckEngineMutation,
   useUpdateCarMutation,

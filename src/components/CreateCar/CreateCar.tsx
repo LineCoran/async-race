@@ -5,7 +5,7 @@ import { useAddCarMutation } from "../../api/apiSlice";
 
 function CreateCar() {
   const [color, setColor] = useState('#aabbcc');
-  const [name, setName] = useState('car');
+  const [name, setName] = useState('');
   const [addCar] = useAddCarMutation();
 
   const handleAddCar = async () => {

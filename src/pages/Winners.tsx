@@ -58,6 +58,8 @@ export default function Winners() {
   }
 
   return (
+    <div>
+      <h1>{`Winners ${allWinnerList.data?.length}`}</h1>
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
@@ -98,5 +100,6 @@ export default function Winners() {
             </Button>
         </ButtonGroup> 
     </TableContainer>
+    </div>
   );
 }
