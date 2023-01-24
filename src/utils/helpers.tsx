@@ -57,3 +57,11 @@ export function generateRandomNumber(maxNumber: number) {
 export function generateRandomColor(): string {
     return '#' + (Math.random().toString(16) + '000000').substring(2,8).toUpperCase()
   }
+
+  export function showWinnerCar(id: number, time: number) {
+    const winnerCar = document.getElementById(`carname${id}`);
+    if (winnerCar) {
+      const carName = winnerCar.innerHTML;
+      alert(`WINNER: ${carName} Time: ${time}`);
+    }
+  }

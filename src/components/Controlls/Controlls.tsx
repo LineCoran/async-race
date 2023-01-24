@@ -1,13 +1,12 @@
 import { Button, ButtonGroup } from "@mui/material";
 import { useAddCarMutation, useAddWinnerMutation, useCheckEngineMutation, useGetAllCarsQuery, useGetCarsQuery, useStartCarMutation, useUpdateWinnerMutation } from "../../api/apiSlice";
 import { useAppDispatch, useAppSelector } from "../../hooks";
+import { carPromiseResult } from "../../interfaces/interfaces";
 import { changeRaceStatus } from "../../store/carsSlice";
-import { calcTime, generateRandomColor, generateRandomNumber, getWinnerById, startAnimation, stopAnimation } from "../../utils/helpers";
-import './Controlls.css';
-import { carModels, carNames } from "../../data/cars";
+import { calcTime, getWinnerById, showWinnerCar, startAnimation, stopAnimation } from "../../utils/helpers";
+import './Controlls.css'
 
 function Controls() {
-    const COUNT_GENERATE_CARS = 100;
     const raceStatus = useAppSelector((state) => state.carsReducer.raceStatus);
     const params = useAppSelector((state) => state.carsReducer.carListParams);
     const { data } = useGetCarsQuery(params);
@@ -26,9 +25,22 @@ function Controls() {
           dispatch(changeRaceStatus(false))
         }
         if (data !== undefined && data.length > 0) {
-          data.map((car) => handleMoveCar(car.id, status))
-        }
+          await Promise.any(data.map((car) => {
+            return new Promise<carPromiseResult>(async (res, rej) => {
+              try {
+                const promise = await handleMoveCar(car.id, status);
+                if (promise) {
+                  res(promise);
+                }
+              } catch(err) {
+                rej(err)
+              }
+        })
+      })).then((winner) =>  {
+        showWinnerCar(winner.id, winner.time);
+      });
     }
+  }
     async function handleMoveCar(id: number, status: string) {
       const {distance, velocity} = await startCar({id, status}).unwrap();
       const winnerCar = await getWinnerById(id);
@@ -38,7 +50,6 @@ function Controls() {
           try {
               await checkEngine({id, status: 'drive'}).unwrap();
               if (!Object.keys(winnerCar).length) {
-                  console.log('here')
                   addWinner({id, wins: 1, time});
               } else {
                   if (time < winnerCar.time) {
@@ -46,22 +57,19 @@ function Controls() {
                       updateWinner({data: newWinner, id})
                   }
               }
+              return {id, time};
           } catch(err) {
               stopAnimation(id);
           }
   }
 }
-  const handleGenerateCar = async () => {
-    let countCars = COUNT_GENERATE_CARS;
-      while(countCars > 0) {
-        const carName = carNames[generateRandomNumber(carNames.length)];
-        const carModel = carModels[generateRandomNumber(carModels.length)];
-        debugger
-        addCar({color: generateRandomColor(), name: `${carName} - ${carModel}`}).unwrap();
-        countCars--;
-      }
-  }
-
+    const handleGenerateCar = async () => {
+        let countOfCarsGenerate = 100;
+        while(countOfCarsGenerate > 0) {
+          addCar({color: 'black', name: 'Tesla'}).unwrap();
+          countOfCarsGenerate--;
+        }
+    }
 
     return (
       <section className='controlls'>

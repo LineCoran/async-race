@@ -56,7 +56,7 @@ function Car({ car, listId } : ICarProps) {
     }
     return(
         <div className="car-wrapper" id={`${car.id}`}>
-            <h3>{car.id}. {car.name}</h3>
+            <h3 id={`carname${car.id}`}>{car.id}. {car.name}</h3>
             <div className='track'>
                 <div className='car-icon' id={'car'+String(car.id)}>
                     <CarIcon color={car.color}/>
