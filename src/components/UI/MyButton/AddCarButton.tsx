@@ -1,13 +1,11 @@
-import { Button } from "@mui/material";
+import { Button } from '@mui/material';
 
 interface IAddCarButton {
-    addCar: any;
+  addCar: () => void;
 }
 
-function AddCarButton({addCar}: IAddCarButton) {
-    return (
-        <Button onClick={addCar}>ADD CAR</Button>
-    )
+function AddCarButton({ addCar }: IAddCarButton) {
+  return <Button onClick={addCar}>ADD CAR</Button>;
 }
 
 export default AddCarButton;

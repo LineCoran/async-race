@@ -3,12 +3,11 @@ import { garageApi } from '../api/apiSlice';
 import carsReducer from './carsSlice';
 
 const store = configureStore({
-    reducer: {
-        carsReducer,
-        [garageApi.reducerPath]: garageApi.reducer,
-    },
-        middleware: (getDefaultMiddleware) => 
-          getDefaultMiddleware().concat(garageApi.middleware)
+  reducer: {
+    carsReducer,
+    [garageApi.reducerPath]: garageApi.reducer,
+  },
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(garageApi.middleware),
 });
 
 export default store;

@@ -1,97 +1,94 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 type Car = {
-    name: string;
-    color: string;
-}
+  name: string;
+  color: string;
+};
 
-type carListParams = {
-    _page: number;
-    _limit: number;
-}
+type CarListParams = {
+  page: number;
+  limit: number;
+};
 
-type winnerListParams = {
-    _page: number;
-    _limit: number;
-    _sort: string;
-    _order: string;
-}
+type WinnerListParams = {
+  page: number;
+  limit: number;
+  sort: string;
+  order: string;
+};
 
 type CarsState = {
-    cars: Car[];
-    raceStatus: boolean;
-    updateCarId: number | null;
-    carListParams: carListParams;
-    winnerListParams: winnerListParams;
-}
+  cars: Car[];
+  raceStatus: boolean;
+  updateCarId: number | null;
+  carListParams: CarListParams;
+  winnerListParams: WinnerListParams;
+};
 
 const initialState: CarsState = {
-    cars: [],
-    raceStatus: false,
-    updateCarId: null,
-    carListParams: {
-        _limit: 7,
-        _page: 1,
-    },
-    winnerListParams: {
-        _limit: 10,
-        _page: 1,
-        _sort: 'id',
-        _order: 'ASC',
-    }
-}
+  cars: [],
+  raceStatus: false,
+  updateCarId: null,
+  carListParams: {
+    limit: 7,
+    page: 1,
+  },
+  winnerListParams: {
+    limit: 10,
+    page: 1,
+    sort: 'id',
+    order: 'ASC',
+  },
+};
 
 const carsSLice = createSlice({
-    name: 'cars',
-    initialState,
-    reducers: {
-        addCar(state, action: PayloadAction<Car>) {
-            state.cars.push({
-                name: action.payload.name,
-                color: action.payload.color,
-            })
-        },
-        changeRaceStatus(state, action: PayloadAction<boolean>) {
-            state.raceStatus = action.payload;
-        },
-        addIdUpdatedCarSlice(state, action: PayloadAction<number | null>) {
-            state.updateCarId = action.payload;
-        },
-        changeGaragePage(state, action: PayloadAction<boolean>) {
-            if (action.payload) {
-                state.carListParams._page++;
-            } else {
-                state.carListParams._page--;
-            }
-        },
-        changeWinnerPage(state, action: PayloadAction<boolean>) {
-            if (action.payload) {
-                state.winnerListParams._page++;
-            } else {
-                state.winnerListParams._page--;
-            }
-        },
-        changeWinnerSort(state, action: PayloadAction<string>) {
-            if (state.winnerListParams._sort === action.payload ) {
-                if (state.winnerListParams._order === 'DESC') {
-                    state.winnerListParams._order = 'ASC';
-                } else {
-                    state.winnerListParams._order = 'DESC';
-                }
-            } else {
-                state.winnerListParams._sort = action.payload;
-                state.winnerListParams._order = 'ASC';
-            }
-        },
-    }
-})
+  name: 'cars',
+  initialState,
+  reducers: {
+    addCar(state, action: PayloadAction<Car>) {
+      state.cars.push({
+        name: action.payload.name,
+        color: action.payload.color,
+      });
+    },
+    changeRaceStatus(state, action: PayloadAction<boolean>) {
+      const currentState = state;
+      currentState.raceStatus = action.payload;
+    },
+    addIdUpdatedCarSlice(state, action: PayloadAction<number | null>) {
+      const currentState = state;
+      currentState.updateCarId = action.payload;
+    },
+    changeGaragePage(state, action: PayloadAction<boolean>) {
+      const currentState = state;
+      currentState.carListParams.page += action.payload ? 1 : -1;
+    },
+    changeWinnerPage(state, action: PayloadAction<boolean>) {
+      const currentState = state;
+      currentState.winnerListParams.page += action.payload ? 1 : -1;
+    },
+    changeWinnerSort(state, action: PayloadAction<string>) {
+      const currentState = state;
+      if (currentState.winnerListParams.sort === action.payload) {
+        if (currentState.winnerListParams.order === 'DESC') {
+          currentState.winnerListParams.order = 'ASC';
+        } else {
+          currentState.winnerListParams.order = 'DESC';
+        }
+      } else {
+        currentState.winnerListParams.sort = action.payload;
+        currentState.winnerListParams.order = 'ASC';
+      }
+    },
+  },
+});
 
 export const {
-    addCar,
-    changeRaceStatus,
-    addIdUpdatedCarSlice,
-    changeGaragePage,
-    changeWinnerPage,
-    changeWinnerSort
+  addCar,
+  changeRaceStatus,
+  addIdUpdatedCarSlice,
+  changeGaragePage,
+  changeWinnerPage,
+  changeWinnerSort,
 } = carsSLice.actions;
 export default carsSLice.reducer;

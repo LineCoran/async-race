@@ -9,17 +9,17 @@ export interface ICarRES {
 }
 
 export interface ICarItem {
-  id: number,
-  name: string,
-  color: string, 
- }
- 
- export interface ICarProps {
+  id: number;
+  name: string;
+  color: string;
+}
+
+export interface ICarProps {
   car: ICarItem;
   listId: number;
- }
+}
 
- export interface carPromiseResult {
-  time: number;
+export interface CarPromiseResult {
   id: number;
+  time: number;
 }
