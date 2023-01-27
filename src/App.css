@@ -3,22 +3,3 @@ h1, h2, h3, h4, h5, h6, *, ::before, ::after {
     margin: 0;
     box-sizing: border-box;
 }
-
-.container {
-    padding: 1rem 2rem;
-    width: 100%;
-    max-width: 1440px;
-    margin: 0 auto;
-    overflow-x: hidden;
-}
-
-.page-wrapper {
-    width: 100%;
-    position: relative;
-}
-
-.winner-wrapper {
-    position: absolute;
-    left: 0;
-    top: 0;
-}

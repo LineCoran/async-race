@@ -1,5 +1,6 @@
-import CarClassNames from '../interfaces/enums';
-import { WinnerParams } from '../interfaces/types';
+import { carNames, carModels } from '../data/cars';
+import { CarClassNames } from '../interfaces/enums';
+import { CarApi, WinnerParams } from '../interfaces/types';
 
 export function stopAnimation(id: number) {
   const car = document.getElementById(`car${id}`);
@@ -36,7 +37,7 @@ export async function getWinnerById(id: number) {
 }
 
 export function addStyleSelectedCar(listId: number) {
-  const allCars = document.querySelectorAll(`${CarClassNames.default}`);
+  const allCars = document.querySelectorAll(`.${CarClassNames.default}`);
   allCars.forEach((car) => {
     const element = car;
     element.className = CarClassNames.default;
@@ -58,4 +59,17 @@ export function showWinnerCar(id: number, time: number) {
     const carName = winnerCar.innerHTML;
     alert(`WINNER: ${carName} Time: ${time}`);
   }
+}
+
+export function createRowDate(id: number, time: number, wins: number) {
+  const carName = carNames[generateRandomNumber(carNames.length)];
+  const carModel = carModels[generateRandomNumber(carModels.length)];
+  const name = `${carName} ${carModel}`;
+  return { id, name, wins, time };
+}
+
+export function calcCountPages(dataList: WinnerParams[] | CarApi[] | undefined, limit: number) {
+  const MIN_PAGES = 1;
+  if (!dataList) return MIN_PAGES;
+  return Math.ceil(dataList.length / limit);
 }

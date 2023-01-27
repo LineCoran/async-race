@@ -4,7 +4,7 @@ import { HexColorPicker } from 'react-colorful';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { useUpdateCarMutation } from '../../api/apiSlice';
 import { addIdUpdatedCarSlice } from '../../store/carsSlice';
-import CarClassNames from '../../interfaces/enums';
+import { CarClassNames } from '../../interfaces/enums';
 
 function UpdateCar() {
   const idUpdateCar = useAppSelector((store) => store.carsReducer.updateCarId);

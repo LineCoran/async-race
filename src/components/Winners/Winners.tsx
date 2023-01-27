@@ -5,55 +5,43 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { Button, ButtonGroup } from '@mui/material';
-import { useGetAllWinnersQuery, useGetWinnersQuery } from '../api/apiSlice';
-import { changeWinnerPage, changeWinnerSort } from '../store/carsSlice';
-import { useAppDispatch, useAppSelector } from '../hooks';
-import { generateRandomNumber } from '../helpers/helpers';
-import { carModels, carNames } from '../data/cars';
+import { useGetAllWinnersQuery, useGetWinnersQuery } from '../../api/apiSlice';
+import { changeWinnerPage, changeWinnerSort } from '../../store/carsSlice';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { createRowDate, calcCountPages } from '../../helpers/helpers';
+import { IWinners } from '../../interfaces/interfaces';
+import { TableRows } from '../../interfaces/types';
+import ButtonGroupPagination from '../ButtonGroupPagination/ButtonGroupPagination';
 
-type TableRows = {
-  id: number;
-  name: string;
-  time: number;
-  wins: number;
-};
-
-function createData(id: number, time: number, wins: number) {
-  const carName = carNames[generateRandomNumber(carNames.length)];
-  const carModel = carModels[generateRandomNumber(carModels.length)];
-  const name = `${carName} ${carModel}`;
-  return { id, name, wins, time };
-}
-
-export default function Winners() {
-  const MIN_PAGE = 1;
+export default function Winners({ isGarageVisible }: IWinners) {
+  const MIN_PAGES = 1;
+  const rows: TableRows[] = [];
   const dispatch = useAppDispatch();
   const allWinnerList = useGetAllWinnersQuery('');
   const params = useAppSelector((store) => store.carsReducer.winnerListParams);
   const { data } = useGetWinnersQuery(params);
-  const rows: TableRows[] = [];
+  const maxPages = calcCountPages(allWinnerList.data, params._limit);
 
-  if (data !== undefined && data.length > 0) {
-    data.map((winner) => rows.push(createData(winner.id, winner.time, winner.wins)));
-  }
-
-  const maxPages = allWinnerList.data
-    ? Math.ceil(allWinnerList.data.length / params.limit)
-    : MIN_PAGE;
-
-  function handleChangePage(value: boolean) {
-    dispatch(changeWinnerPage(value));
-  }
+  if (data) data.map((winner) => rows.push(createRowDate(winner.id, winner.time, winner.wins)));
 
   function handleChangeSort(value: string) {
     dispatch(changeWinnerSort(value));
   }
 
+  const handleChangePage = (value: boolean) => {
+    dispatch(changeWinnerPage(value));
+  };
+
   return (
-    <div>
+    <div className={isGarageVisible ? 'winner-wrapper-hidden' : 'winner-wrapper'}>
       <h1>{`Winners ${allWinnerList.data?.length}`}</h1>
       <TableContainer component={Paper}>
+        <ButtonGroupPagination
+          minPages={MIN_PAGES}
+          maxPages={maxPages}
+          currentPage={params._page}
+          changePage={handleChangePage}
+        />
         <Table sx={{ minWidth: 650 }} aria-label='simple table'>
           <TableHead>
             <TableRow>
@@ -91,25 +79,6 @@ export default function Winners() {
             ))}
           </TableBody>
         </Table>
-        <ButtonGroup sx={{ marginBottom: '0.5rem' }} size='small' aria-label='small button group'>
-          <Button
-            sx={{ minWidth: 'max-content', margin: '0' }}
-            disabled={MIN_PAGE === params.page}
-            onClick={() => handleChangePage(false)}
-          >
-            Prev
-          </Button>
-          <Button color='primary' sx={{ minWidth: 'max-content', margin: '0' }}>
-            {params.page}
-          </Button>
-          <Button
-            sx={{ minWidth: 'max-content', margin: '0' }}
-            disabled={maxPages === params.page}
-            onClick={() => handleChangePage(true)}
-          >
-            Next
-          </Button>
-        </ButtonGroup>
       </TableContainer>
     </div>
   );

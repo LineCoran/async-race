@@ -1,6 +1,9 @@
-enum CarClassNames {
+export enum CarClassNames {
   default = 'car-wrapper',
   active = 'car-wrapper-active',
 }
 
-export default CarClassNames;
+export enum ButtonNames {
+  GARAGE = 'To garage',
+  WINNERS = 'To winners',
+}

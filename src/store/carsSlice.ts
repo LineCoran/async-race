@@ -1,27 +1,16 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { GarageListParams, WinnerListParams } from '../interfaces/types';
 
 type Car = {
   name: string;
   color: string;
 };
 
-type CarListParams = {
-  page: number;
-  limit: number;
-};
-
-type WinnerListParams = {
-  page: number;
-  limit: number;
-  sort: string;
-  order: string;
-};
-
 type CarsState = {
   cars: Car[];
   raceStatus: boolean;
   updateCarId: number | null;
-  carListParams: CarListParams;
+  carListParams: GarageListParams;
   winnerListParams: WinnerListParams;
 };
 
@@ -30,14 +19,14 @@ const initialState: CarsState = {
   raceStatus: false,
   updateCarId: null,
   carListParams: {
-    limit: 7,
-    page: 1,
+    _limit: 7,
+    _page: 1,
   },
   winnerListParams: {
-    limit: 10,
-    page: 1,
-    sort: 'id',
-    order: 'ASC',
+    _limit: 10,
+    _page: 1,
+    _sort: 'id',
+    _order: 'ASC',
   },
 };
 
@@ -61,23 +50,23 @@ const carsSLice = createSlice({
     },
     changeGaragePage(state, action: PayloadAction<boolean>) {
       const currentState = state;
-      currentState.carListParams.page += action.payload ? 1 : -1;
+      currentState.carListParams._page += action.payload ? 1 : -1;
     },
     changeWinnerPage(state, action: PayloadAction<boolean>) {
       const currentState = state;
-      currentState.winnerListParams.page += action.payload ? 1 : -1;
+      currentState.winnerListParams._page += action.payload ? 1 : -1;
     },
     changeWinnerSort(state, action: PayloadAction<string>) {
       const currentState = state;
-      if (currentState.winnerListParams.sort === action.payload) {
-        if (currentState.winnerListParams.order === 'DESC') {
-          currentState.winnerListParams.order = 'ASC';
+      if (currentState.winnerListParams._sort === action.payload) {
+        if (currentState.winnerListParams._order === 'DESC') {
+          currentState.winnerListParams._order = 'ASC';
         } else {
-          currentState.winnerListParams.order = 'DESC';
+          currentState.winnerListParams._order = 'DESC';
         }
       } else {
-        currentState.winnerListParams.sort = action.payload;
-        currentState.winnerListParams.order = 'ASC';
+        currentState.winnerListParams._sort = action.payload;
+        currentState.winnerListParams._order = 'ASC';
       }
     },
   },

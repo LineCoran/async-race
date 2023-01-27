@@ -1,59 +1,16 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { ICar } from '../interfaces/interfaces';
-
-type CarApi = {
-  name: string;
-  color: string;
-  id: number;
-};
-
-type UpdateCar = {
-  data: {
-    name: string;
-    color: string;
-  };
-  id: number;
-};
-
-type UpdateWinner = {
-  data: {
-    wins: number;
-    time: number;
-  };
-  id: number;
-};
-
-type ICarStatus = {
-  id: number;
-  status: string;
-};
-
-type ICarSuccessResponse = {
-  velocity: number;
-  distance: number;
-};
-
-type ICheckDriver = {
-  success: boolean;
-};
-
-type IGetCar = {
-  page: number;
-  limit: number;
-};
-
-type WinnerParams = {
-  id: number;
-  wins: number;
-  time: number;
-};
-
-type WinnerListParams = {
-  page: number;
-  limit: number;
-  sort: string;
-  order: string;
-};
+import {
+  CarApi,
+  GarageListParams,
+  ICarStatus,
+  ICarSuccessResponse,
+  ICheckDriver,
+  UpdateCar,
+  UpdateWinner,
+  WinnerListParams,
+  WinnerParams,
+} from '../interfaces/types';
 
 export const garageApi = createApi({
   reducerPath: 'Cars',
@@ -68,7 +25,7 @@ export const garageApi = createApi({
       }),
       invalidatesTags: [{ type: 'Cars', id: 'LIST' }],
     }),
-    getCars: builder.query<CarApi[], IGetCar>({
+    getCars: builder.query<CarApi[], GarageListParams>({
       query: (params) => ({
         url: `/garage`,
         params,

@@ -23,3 +23,7 @@ export interface CarPromiseResult {
   id: number;
   time: number;
 }
+
+export interface IWinners {
+  isGarageVisible: boolean;
+}

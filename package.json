@@ -34,6 +34,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "npm run test:lint:js",
+    "fix": "./node_modules/.bin/eslint src --fix",
     "test:unit": "react-scripts test",
     "test:lint:js": "eslint --ignore-path .gitignore .",
     "test:lint:css": "stylelint --ignore-path .gitignore \"**/*.css\"",
