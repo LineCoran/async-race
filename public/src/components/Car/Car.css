@@ -1,0 +1,16 @@
+.car-wrapper {
+    border-bottom: 1px solid black;
+}
+
+.car-wrapper-active {
+    background-color: rgba(42, 126, 48, 0.1);
+}
+
+button {
+    width: max-content;
+}
+
+@keyframes race {
+    0%{transform: translateX(0);}
+    100%{transform: translateX(80%);}
+}
